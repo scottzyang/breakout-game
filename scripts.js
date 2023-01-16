@@ -2,6 +2,9 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+// score keeper
+let score = 0;
+
 // ball information
 let x = canvas.width / 2;
 let y = canvas.height - 30;
@@ -56,6 +59,14 @@ function drawBricks() {
 }
 
 // -------------------------------------------------------------------
+function drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText(`Score: ${score}`, 8, 20);
+}
+
+
+// -------------------------------------------------------------------
 // keyboard functions
 function keyDownHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
@@ -87,6 +98,7 @@ function collisionDetection() {
         ) {
           dy = -dy;
           b.status = 0;
+          score++;
         }
       }
     }
@@ -120,6 +132,7 @@ function draw() {
   drawBall();
   drawPaddle();
   collisionDetection();
+  drawScore();
   x += dx;
   y += dy;
 
