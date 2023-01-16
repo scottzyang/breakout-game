@@ -8,8 +8,8 @@ let score = 0;
 // ball information
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-let dx = 2;
-let dy = -2;
+let dx = 5;
+let dy = -5;
 const ballRadius = 10;
 
 // paddle information
@@ -99,11 +99,17 @@ function collisionDetection() {
           dy = -dy;
           b.status = 0;
           score++;
+          if (score === brickRowCount * brickColumnCount) {
+            alert("YOU WIN, CONGRATULATIONS!");
+            document.location.reload();
+            clearInterval(interval); // Needed for Chrome to end game
+          }
         }
       }
     }
   }
 }
+
 
 
 // -------------------------------------------------------------------
