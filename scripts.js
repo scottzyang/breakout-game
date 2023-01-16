@@ -63,15 +63,24 @@ function draw() {
   x += dx;
   y += dy;
 
-  // reverse direction if top or bottom are hit
+  // reverse direction if left or right are hit
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
   
-  // reverse direction if left or right are hit
-  if (y + dy > canvas.height - ballRadius|| y + dy < ballRadius) {
+  // reverse direction if top is hit, or game over if bottom is hit
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      alert("GAME OVER");
+      document.location.reload();
+      clearInterval(interval);
+    }
   }
+  
   
   // ball movement
   if (rightPressed) {
@@ -88,4 +97,4 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 
 // draw function will be executed every 10 ms
-setInterval(draw, 10)
+const interval = setInterval(draw, 10);
