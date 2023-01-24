@@ -1,26 +1,25 @@
+/* eslint-disable import/extensions */
+// imports
+// import Brick from './classes/brick.js';
+import Bricks from './classes/bricks.js';
+import Ball from './classes/ball.js';
+import Paddle from './classes/paddle.js';
+import Score from './classes/score.js';
+import Lives from './classes/lives.js';
+
 // gameboard
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
-// score keeper & lives keeper
-let score = 0;
-let lives = 3;
-
 // ball information
-let x = canvas.width / 2;
-let y = canvas.height - 30;
-let dx = 2;
-let dy = -2;
-const ballRadius = 10;
+const x = canvas.width / 2;
+const y = canvas.height - 30;
 
 // paddle information
 const paddleHeight = 10;
 const paddleWidth = 75;
-let paddleX = (canvas.width - paddleWidth) / 2;
-
-// movement
-let rightPressed = false;
-let leftPressed = false;
+const paddleX = (canvas.width - paddleWidth) / 2;
+const paddleY = canvas.height - paddleHeight;
 
 // brick information
 const brickRowCount = 3;
@@ -28,92 +27,42 @@ const brickColumnCount = 5;
 const brickWidth = 75;
 const brickHeight = 20;
 const brickPadding = 10;
-const brickOffsetTop = 30;
-const brickOffsetLeft = 30;
-
-// brick 2D array
+const brickOffset = 30;
 const bricks = [];
-for (let c = 0; c < brickColumnCount; c += 1) {
-  bricks[c] = [];
-  for (let r = 0; r < brickColumnCount; r += 1) {
-    bricks[c][r] = { x: 0, y: 0, status: 1 };
-  }
-}
 
-// draw bricks function
-function drawBricks() {
-  for (let c = 0; c < brickColumnCount; c += 1) {
-    for (let r = 0; r < brickRowCount; r += 1) {
-      if (bricks[c][r].status === 1) {
-        const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-        const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-        bricks[c][r].x = brickX;
-        bricks[c][r].y = brickY;
-        ctx.beginPath();
-        ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = '#0095DD';
-        ctx.fill();
-        ctx.closePath();
-      }
-    }
-  }
-}
+// create lives
+const livesX = canvas.width - 65;
+const lives = new Lives(livesX);
 
-// -------------------------------------------------------------------
-function drawScore() {
-  ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
-  ctx.fillText(`Score: ${score}`, 8, 20);
-}
+// create score
+const score = new Score();
 
-// -------------------------------------------------------------------
-function drawLives() {
-  ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
-  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
-}
+// create paddle
+const paddle = new Paddle(canvas, paddleX, paddleY);
 
-// -------------------------------------------------------------------
-// keyboard & mouse functions
-function keyDownHandler(e) {
-  if (e.key === 'Right' || e.key === 'ArrowRight') {
-    rightPressed = true;
-  } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-    leftPressed = true;
-  }
-}
+// create ball
+const ball = new Ball(x, y);
 
-function keyUpHandler(e) {
-  if (e.key === 'Right' || e.key === 'ArrowRight') {
-    rightPressed = false;
-  } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-    leftPressed = false;
-  }
-}
-
-function mouseMoveHandler(e) {
-  const relativeX = e.clientX - canvas.offsetLeft;
-  if (relativeX > 0 && relativeX < canvas.width) {
-    paddleX = relativeX - paddleWidth / 2;
-  }
-}
+// eslint-disable-next-line max-len
+const brickGroup = new Bricks(ctx, bricks, brickColumnCount, brickRowCount, brickWidth, brickHeight, brickPadding, brickOffset);
+brickGroup.initializeBricks();
 
 // -------------------------------------------------------------------
 function collisionDetection() {
-  for (let c = 0; c < brickColumnCount; c += 1) {
-    for (let r = 0; r < brickRowCount; r += 1) {
-      const b = bricks[c][r];
+  for (let c = 0; c < brickGroup.column; c += 1) {
+    for (let r = 0; r < brickGroup.row; r += 1) {
+      const b = brickGroup.bricks[c][r];
       if (b.status === 1) {
         if (
-          x > b.x
-          && x < b.x + brickWidth
-          && y > b.y
-          && y < b.y + brickHeight
+          ball.x > b.x
+          && ball.x < b.x + brickGroup.width
+          && ball.y > b.y
+          && ball.y < b.y + brickGroup.height
         ) {
-          dy = -dy;
+          ball.dy = -ball.dy;
           b.status = 0;
-          score += 1;
-          if (score === brickRowCount * brickColumnCount) {
+          score.update(1);
+          if (score.score === brickGroup.row * brickGroup.column) {
             // eslint-disable-next-line no-alert
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
@@ -123,75 +72,68 @@ function collisionDetection() {
     }
   }
 }
-// -------------------------------------------------------------------
-function drawPaddle() {
-  ctx.beginPath();
-  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = '#0095DD';
-  ctx.fill();
-  ctx.closePath();
-}
-
-// -------------------------------------------------------------------
-function drawBall() {
-  ctx.beginPath();
-  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = '#0095DD';
-  ctx.fill();
-  ctx.closePath();
-}
 
 // -------------------------------------------------------------------
 function draw() {
-  // drawing code
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBricks();
-  drawBall();
-  drawPaddle();
+  // draw bricks
+  brickGroup.drawBricks();
+
+  // draw ball
+  ball.render(ctx);
+
+  // draw paddle
+  // drawPaddle();
+  paddle.render(ctx);
   collisionDetection();
-  drawScore();
-  drawLives();
+  score.render(ctx);
+  lives.render(ctx);
 
   // reverse direction if left or right are hit
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    dx = -dx;
+  if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+    ball.dx = -ball.dx;
   }
   // reverse direction if top is hit, or game over if bottom is hit
-  if (y + dy < ballRadius) {
-    dy = -dy;
-  } else if (y + dy > canvas.height - ballRadius) {
-    if (x > paddleX && x < paddleX + paddleWidth) {
-      dy = -dy;
+  if (ball.y + ball.dy < ball.radius) {
+    ball.dy = -ball.dy;
+  } else if (ball.y + ball.dy > canvas.height - ball.radius) {
+    if (ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
+      ball.dy = -ball.dy;
     } else {
-      lives -= 1;
-      if (!lives) {
+      lives.update(1);
+      if (!lives.lives) {
         // eslint-disable-next-line no-alert
         alert('GAME OVER');
         document.location.reload();
       } else {
-        x = canvas.width / 2;
-        y = canvas.height - 30;
-        dx = 2;
-        dy = -2;
-        paddleX = (canvas.width - paddleWidth) / 2;
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height - 30;
+        ball.dx = 2;
+        ball.dy = -2;
+        paddle.x = (canvas.width - paddle.width) / 2;
       }
     }
   }
-  // ball movement
-  if (rightPressed) {
-    paddleX = Math.min(paddleX + 7, canvas.width - paddleWidth);
-  } else if (leftPressed) {
-    paddleX = Math.max(paddleX - 7, 0);
+  // paddle movement
+  if (paddle.rightPressed) {
+    paddle.x = Math.min(paddle.x + 7, canvas.width - paddle.width);
+  } else if (paddle.leftPressed) {
+    paddle.x = Math.max(paddle.x - 7, 0);
   }
-  x += dx;
-  y += dy;
+  ball.move();
   requestAnimationFrame(draw);
 }
 // -------------------------------------------------------------------
 // keyboard event listeners
-document.addEventListener('keydown', keyDownHandler, false);
-document.addEventListener('keyup', keyUpHandler, false);
-document.addEventListener('mousemove', mouseMoveHandler, false);
+document.addEventListener('keydown', (e) => {
+  paddle.keyDownHandler(e);
+}, false);
+document.addEventListener('keyup', (e) => {
+  paddle.keyUpHandler(e);
+}, false);
+document.addEventListener('mousemove', (e) => {
+  paddle.mouseMoveHandler(e);
+}, false);
 
 // draw function will be executed every 10 ms
 draw();
