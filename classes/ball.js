@@ -1,7 +1,6 @@
 /* eslint-disable import/extensions */
 import Sprite from './sprite.js';
 
-// initialize with x, y, rad, and color.
 // x, y, and color are passed to the sprite class
 class Ball extends Sprite {
   constructor(x = 0, y = 0, radius = 10, color = '#0095DD') {
