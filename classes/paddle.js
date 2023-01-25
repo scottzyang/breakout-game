@@ -7,6 +7,17 @@ class Paddle extends Sprite {
     this.canvas = canvas;
     this.rightPressed = false;
     this.leftPressed = false;
+
+    // keyboard event listeners
+    document.addEventListener('keydown', (e) => {
+      this.keyDownHandler(e);
+    }, false);
+    document.addEventListener('keyup', (e) => {
+      this.keyUpHandler(e);
+    }, false);
+    document.addEventListener('mousemove', (e) => {
+      this.mouseMoveHandler(e);
+    }, false);
   }
 
   render(ctx) {
