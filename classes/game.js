@@ -12,42 +12,24 @@ class Game {
     this.ctx = ctx;
 
     // ball information
-    this.ball = null;
     this.ballX = this.canvas.width / 2;
     this.ballY = this.canvas.height - 30;
+    this.ball = new Ball(this.ballX, this.ballY);
 
     // brick information
-    this.brickGroup = null;
+    this.brickGroup = new Bricks(this.ctx);
+    this.brickGroup.initializeBricks();
 
     // paddle information
-    this.paddle = null;
     this.paddleHeight = 10;
     this.paddleWidth = 75;
     this.paddleX = this.canvas.width - this.paddleWidth / 2;
     this.paddleY = this.canvas.height - this.paddleHeight;
+    this.paddle = new Paddle(this.canvas, this.paddleX, this.paddleY);
 
     // score and lives information
     this.livesX = this.canvas.width - 65;
-    this.score = null;
-    this.lives = null;
-  }
-
-  initializeGameObjects() {
-    // instantiate paddle
-    this.paddle = new Paddle(this.canvas, this.paddleX, this.paddleY);
-
-    // instantiate ball
-    this.ball = new Ball(this.ballX, this.ballY);
-
-    // instantiate bricks
-    // eslint-disable-next-line max-len
-    this.brickGroup = new Bricks(this.ctx);
-    this.brickGroup.initializeBricks();
-
-    // instantiate lives
     this.lives = new Lives(this.livesX);
-
-    // instantiate score
     this.score = new Score();
   }
 
@@ -125,18 +107,6 @@ class Game {
       this.run();
     });
   }
-
-  //   // keyboard event handlers
-  //   document.addEventListener('keydown', (e) => {
-  //     this.paddle.keyDownHandler(e);
-  //   }, false);
-  //   document.addEventListener('keyup', (e) => {
-  //     this.paddle.keyDownHandler(e);
-  //   }, false);
-  //   document.addEventListener('mousemove', (e) => {
-  //     this.paddle.mouseMoveHandler(e);
-  //   }, false);
-  // }
 }
 
 export default Game;
