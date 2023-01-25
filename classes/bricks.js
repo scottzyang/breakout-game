@@ -2,7 +2,8 @@
 import Brick from './brick.js';
 
 class Bricks {
-  constructor(ctx, bricks, column, row, width, height, padding, offset) {
+  // eslint-disable-next-line max-len
+  constructor(ctx, bricks = [], column = 5, row = 3, width = 75, height = 20, padding = 10, offset = 30) {
     this.ctx = ctx;
     this.bricks = bricks;
     this.column = column;
