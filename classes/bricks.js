@@ -12,6 +12,7 @@ class Bricks {
     this.height = height;
     this.padding = padding;
     this.offset = offset;
+    this.rowColor = ['#f44336', '#ffa500', '#8fce00'];
   }
 
   initializeBricks() {
@@ -20,7 +21,7 @@ class Bricks {
       for (let r = 0; r < this.column; r += 1) {
         const brickX = c * (this.width + this.padding) + this.offset;
         const brickY = r * (this.height + this.padding) + this.offset;
-        this.bricks[c][r] = new Brick(brickX, brickY);
+        this.bricks[c][r] = new Brick(brickX, brickY, this.rowColor[r]);
       }
     }
   }

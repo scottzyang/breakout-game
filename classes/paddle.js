@@ -2,7 +2,7 @@
 import Sprite from './sprite.js';
 
 class Paddle extends Sprite {
-  constructor(canvas, x, y = 0, width = 75, height = 10, color = '#0095DD') {
+  constructor(canvas, x, y = 0, width = 75, height = 10, color = '#800080') {
     super(x, y, width, height, color);
     this.canvas = canvas;
     this.rightPressed = false;
