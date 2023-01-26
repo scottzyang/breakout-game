@@ -2,7 +2,7 @@
 import Sprite from './sprite.js';
 
 class Lives extends Sprite {
-  constructor(x, y = 20, color = '#0095DD', lives = 3, font = '16px Arial') {
+  constructor(x, y = 20, color = '#f44336', lives = 3, font = '16px Arial') {
     super(x, y);
     this.color = color;
     this.lives = lives;

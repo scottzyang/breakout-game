@@ -2,7 +2,7 @@
 import Sprite from './sprite.js';
 
 class Score extends Sprite {
-  constructor(x = 8, y = 20, color = '#0095DD', score = 0, font = '16px Arial') {
+  constructor(x = 8, y = 20, color = '#f44336', score = 0, font = '16px Arial') {
     super(x, y);
     this.color = color;
     this.score = score;
