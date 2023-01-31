@@ -5,6 +5,8 @@
 
 This project is a recreation of the video game <i>Breakout</i>, released by Atari in 1976. 
 
+<img src="./images/screenshot.png" alt="screenshot" width="350">
+
 This video game allows the user to control a paddle (via their keyboard arrows or mouse cursor) to deflect a moving ball towards a grid of bricks. Each brick in contact with the ball will be counted as a point. User is allowed 3 lives, and will decrement if the user fails to deflect the ball. 
 
 The project was initially created utilizing a single `scripts.js` file to handle the logic and game functionality. Later iterations of the project required the conversion to `object oriented programming` through the creation of multiple classes to represent the many game objects. 
@@ -27,5 +29,4 @@ Classes:
 - `JavaScript`
 - `HTML`
 - `Object Oriented Programming`
-
 
