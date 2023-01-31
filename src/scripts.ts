@@ -1,9 +1,9 @@
 /* eslint-disable import/extensions */
 // imports
-import Game from './game.js';
+import Game from './game';
 
 // gameboard
-const canvas = document.getElementById('myCanvas');
+const canvas = <HTMLCanvasElement>document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
 // instantiate game class

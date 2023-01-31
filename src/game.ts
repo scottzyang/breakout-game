@@ -1,12 +1,27 @@
 /* eslint-disable import/extensions */
-import Ball from './ball.js';
-import Bricks from './bricks.js';
-import Paddle from './paddle.js';
-import Score from './score.js';
-import Lives from './lives.js';
+import Ball from './ball';
+import Bricks from './bricks';
+import Paddle from './paddle';
+import Score from './score';
+import Lives from './lives';
 
 class Game {
-  constructor(canvas, ctx) {
+  canvas: HTMLCanvasElement
+  ctx: CanvasRenderingContext2D
+  ballX: number
+  ballY: number
+  ball: Ball
+  brickGroup: Bricks
+  paddleHeight: number
+  paddleWidth: number
+  paddleX: number
+  paddleY: number
+  paddle: Paddle
+  livesX: number
+  lives: Lives
+  score: Score
+
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     // game board
     this.canvas = canvas;
     this.ctx = ctx;

@@ -1,8 +1,14 @@
 /* eslint-disable import/extensions */
-import Sprite from './sprite.js';
+import Sprite from './sprite';
 
 class Paddle extends Sprite {
-  constructor(canvas, x, y = 0, width = 75, height = 10, color = '#800080') {
+  canvas: HTMLCanvasElement
+  x: number
+  rightPressed: boolean
+  leftPressed: boolean
+  width: number
+
+  constructor(canvas: HTMLCanvasElement, x: number, y = 0, width = 75, height = 10, color = '#800080') {
     super(x, y, width, height, color);
     this.canvas = canvas;
     this.rightPressed = false;
@@ -20,7 +26,7 @@ class Paddle extends Sprite {
     }, false);
   }
 
-  keyDownHandler(e) {
+  keyDownHandler(e: KeyboardEvent) {
     if (e.key === 'Right' || e.key === 'ArrowRight') {
       this.rightPressed = true;
     } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
@@ -28,7 +34,7 @@ class Paddle extends Sprite {
     }
   }
 
-  keyUpHandler(e) {
+  keyUpHandler(e: KeyboardEvent) {
     if (e.key === 'Right' || e.key === 'ArrowRight') {
       this.rightPressed = false;
     } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
@@ -36,7 +42,7 @@ class Paddle extends Sprite {
     }
   }
 
-  mouseMoveHandler(e) {
+  mouseMoveHandler(e: MouseEvent) {
     const relativeX = e.clientX - this.canvas.offsetLeft;
     if (relativeX > 0 && relativeX < this.canvas.width) {
       this.x = relativeX - this.width / 2;

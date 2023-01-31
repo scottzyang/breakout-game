@@ -1,9 +1,21 @@
 /* eslint-disable import/extensions */
-import Brick from './brick.js';
+import Brick from './brick';
 
 class Bricks {
   // eslint-disable-next-line max-len
-  constructor(ctx, bricks = [], column = 5, row = 3, width = 75, height = 20, padding = 10, offset = 30) {
+  x: number
+  y: number
+  ctx: CanvasRenderingContext2D
+  width: number
+  height: number
+  column: number
+  row: number
+  bricks: Brick[][]
+  padding: number
+  offset: number
+  rowColor: string[]
+
+  constructor(ctx: CanvasRenderingContext2D, bricks: Brick[][] = [], column = 5, row = 3, width = 75, height = 20, padding = 10, offset = 30) {
     this.ctx = ctx;
     this.bricks = bricks;
     this.column = column;
