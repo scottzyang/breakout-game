@@ -26,7 +26,7 @@ Classes:
 - `Game` - handles instantiation of all game objects and the `run` method to start the game. 
 
 ## Core Technologies/Principles Used
-- `JavaScript`
+- `JavaScript & Typescript`
 - `HTML`
 - `Object Oriented Programming`
 
