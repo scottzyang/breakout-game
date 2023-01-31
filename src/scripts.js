@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 // imports
-import Game from './classes/game.js';
+import Game from './game.js';
 
 // gameboard
 const canvas = document.getElementById('myCanvas');
