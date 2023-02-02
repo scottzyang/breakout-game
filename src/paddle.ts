@@ -3,7 +3,6 @@ import Sprite from './sprite';
 
 class Paddle extends Sprite {
   canvas: HTMLCanvasElement
-  x: number
   rightPressed: boolean
   leftPressed: boolean
   width: number

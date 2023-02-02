@@ -6,9 +6,6 @@ class Ball extends Sprite {
   radius: number
   dx: number
   dy: number
-  color: string
-  x: number
-  y: number
 
   constructor(x = 0, y = 0, radius = 10, color = '#00447c') {
     super(x, y, 0, 0, color);
